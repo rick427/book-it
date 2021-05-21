@@ -60,8 +60,40 @@ const getSingleRoom = async (req, res) => {
     }
 }
 
+//@ Update room details  POST - /api/rooms/:id
+const updateRoom = async (req, res) => {
+    try {
+        const room = await Room.findById(req.query.id);
+
+        if(!room){
+            return res.status(404).json({
+                success: false,
+                error: 'No room found with this ID'
+            });
+        }
+
+        const updatedRoom = await Room.findByIdAndUpdate(req.query.id, req.body, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        });
+
+        res.status(200).json({
+            success: true,
+            data: updatedRoom
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            error: error.message
+        })
+    }
+}
+
 export {
     allRooms,
     newRoom,
-    getSingleRoom
+    getSingleRoom,
+    updateRoom
 }
