@@ -1,4 +1,5 @@
 import Room from '@/models/room';
+import ErrorHandler from '../utils/error-handler';
 
 //@ Get all rooms GET - /ap/rooms
 const allRooms = async (_, res) => {
@@ -36,15 +37,12 @@ const newRoom = async (req, res) => {
 }
 
 //@ Get room details  POST - /api/rooms/:id
-const getSingleRoom = async (req, res) => {
+const getSingleRoom = async (req, res, next) => {
     try {
         const room = await Room.findById(req.query.id);
 
         if(!room){
-            return res.status(404).json({
-                success: false,
-                error: 'No room found with this ID'
-            });
+            return next(new ErrorHandler('No room found with this ID', 404))
         }
 
         res.status(200).json({
@@ -66,10 +64,7 @@ const updateRoom = async (req, res) => {
         const room = await Room.findById(req.query.id);
 
         if(!room){
-            return res.status(404).json({
-                success: false,
-                error: 'No room found with this ID'
-            });
+            return next(new ErrorHandler('No room found with this ID', 404))
         }
 
         const updatedRoom = await Room.findByIdAndUpdate(req.query.id, req.body, {
@@ -97,10 +92,7 @@ const deleteRoom = async (req, res) => {
         const room = await Room.findById(req.query.id);
 
         if(!room){
-            return res.status(404).json({
-                success: false,
-                error: 'No room found with this ID'
-            });
+            return next(new ErrorHandler('No room found with this ID', 404))
         }
 
         await room.remove();
