@@ -1,4 +1,8 @@
-import {ALL_ROOMS_SUCCESS, ALL_ROOMS_FAILED} from '../types/room-types';
+import {
+    ALL_ROOMS_SUCCESS, 
+    ALL_ROOMS_FAILED, 
+    CLEAR_ERRORS
+} from '../types/room-types';
 
 const initialState = {
     room: []
