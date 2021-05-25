@@ -5,7 +5,7 @@ import {
 } from '../types/room-types';
 
 const initialState = {
-    room: []
+    rooms: []
 }
 
 export const allRoomsReducer = (state = initialState, action) => {
@@ -16,7 +16,7 @@ export const allRoomsReducer = (state = initialState, action) => {
                 roomCount: action.payload.roomsCount,
                 resPerPage: action.payload.resPerPage,
                 filteredRoomsCount: action.payload.filteredRoomsCount,
-                room: action.payload.data
+                rooms: action.payload.data
             }
         case ALL_ROOMS_FAILED:
             return {
