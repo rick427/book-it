@@ -9,11 +9,11 @@ import {
     ROOM_DETAILS_FAILED
 } from '../types/room-types';
 
-export const getRooms = (req) => async (dispatch) => {
+export const getRooms = (req, pageNumber = 1) => async (dispatch) => {
     try {
         const {origin} = absoluteUrl(req);
 
-        const {data} = await axios.get(`${origin}/api/rooms`);
+        const {data} = await axios.get(`${origin}/api/rooms?page=${pageNumber}`);
         dispatch({
             type: ALL_ROOMS_SUCCESS,
             payload: data

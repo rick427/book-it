@@ -15,7 +15,7 @@ export const allRoomsReducer = (state = initialState, action) => {
         case ALL_ROOMS_SUCCESS:
             return {
                 ...state,
-                roomCount: action.payload.roomsCount,
+                roomsCount: action.payload.roomsCount,
                 resPerPage: action.payload.resPerPage,
                 filteredRoomsCount: action.payload.filteredRoomsCount,
                 rooms: action.payload.data
