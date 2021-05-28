@@ -1,5 +1,6 @@
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
+import Link from 'next/link';
 import {useSelector, useDispatch} from 'react-redux';
 import RoomItem from '@/components/room/RoomItem';
 import { toast } from 'react-toastify';
@@ -12,7 +13,7 @@ export default function Home() {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    let {page = 1} = router.query;
+    let {page = 1, location} = router.query;
     page = +page;
 
     useEffect(() => {
@@ -26,20 +27,31 @@ export default function Home() {
         router.push(`/?page=${pageNumber}`);
     } 
 
+    let count = roomsCount;
+
+    if(location){
+        count = filteredRoomsCount;
+    }
+
     return (
         <>
         <section id="rooms" className="container mt-5">
 
-            <h2 className='mb-3 ml-2 stays-heading'>Stays in New York</h2>
+            <h2 className='mb-3 ml-2 stays-heading'>
+                {location ? `Rooms available in ${location}` : 'All Rooms'}
+            </h2>
 
-            <a href='#' className='ml-2 back-to-search'>
-                <i className='fa fa-arrow-left'></i> 
-                Back to Search
-            </a>
+            <Link href='/search'>
+                <a className='ml-2 back-to-search'>
+                    <i className='fa fa-arrow-left'></i> 
+                    Back to Search
+                </a>
+            </Link>
+            
             <div className="row">
-                {rooms & rooms.length === 0 ? (
-                    <div className="alert alert-danger">
-                        No Rooms.
+                {rooms && rooms.length === 0 ? (
+                    <div className="alert alert-danger mt-5 w-100">
+                        <b>No Rooms.</b>
                     </div>
                 ) : rooms && rooms.map(room => (
                     <RoomItem key={room._id} room={room}/>
@@ -47,7 +59,7 @@ export default function Home() {
             </div>
         </section>
 
-        {resPerPage < roomsCount && (
+        {resPerPage < count && (
             <div className="d-flex justify-content-center mt-5">
                 <Pagination
                     activePage={page}

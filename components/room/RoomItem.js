@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function RoomItem({room}) {
+    console.log(room);
+    
     return (
         <div className="col-sm-12 col-md-6 col-lg-3 my-3">
             <div className="card p-2">

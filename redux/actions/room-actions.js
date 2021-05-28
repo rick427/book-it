@@ -9,15 +9,21 @@ import {
     ROOM_DETAILS_FAILED
 } from '../types/room-types';
 
-export const getRooms = (req, pageNumber = 1) => async (dispatch) => {
+export const getRooms = (req, pageNumber = 1, location = '', guests, category) => async (dispatch) => {
     try {
         const {origin} = absoluteUrl(req);
 
-        const {data} = await axios.get(`${origin}/api/rooms?page=${pageNumber}`);
+        let url = `${origin}/api/rooms?page=${pageNumber}&location=${location}`;
+        
+        if(guests) url = url.concat(`&guestCapacity=${guests}`);
+        if(category) url = url.concat(`&category=${category}`);
+
+        const {data} = await axios.get(url);
         dispatch({
             type: ALL_ROOMS_SUCCESS,
             payload: data
-        })
+        });
+        console.log(data);
     } catch (error) {
         dispatch({
             type: ALL_ROOMS_FAILED,
