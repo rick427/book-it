@@ -23,7 +23,6 @@ export const getRooms = (req, pageNumber = 1, location = '', guests, category) =
             type: ALL_ROOMS_SUCCESS,
             payload: data
         });
-        console.log(data);
     } catch (error) {
         dispatch({
             type: ALL_ROOMS_FAILED,
