@@ -1,16 +1,21 @@
 import {useEffect} from 'react';
 import Link from "next/link";
 import {useDispatch, useSelector} from 'react-redux';
+import {useRouter} from 'next/router';
 import {loadUser} from '@/redux/actions/user-actions';
 import {signout, signOut} from 'next-auth/client';
 
 export default function Header() {
     const dispatch = useDispatch();
     const {user, loading} = useSelector(state => state.auth);
+    const {route} = useRouter();
 
     useEffect(() => {
-        dispatch(loadUser());
-    }, [dispatch]);
+        const blacklist = ['/login', '/register'];
+        if(!blacklist.includes(route)){
+            dispatch(loadUser());
+        }
+    }, [dispatch, route]);
 
     const logoutHandler = () => signout();
 

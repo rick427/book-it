@@ -48,7 +48,48 @@ const currentUser = catchAsyncErrors(async (req, res) => {
     });
 });
 
+//@ Update user info  PUT - /api/me/update
+const updateUser = catchAsyncErrors(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    const {name, email, password, avatar} = req.body;
+
+    if(user){
+        user.name = name;
+        user.email = email;
+
+        if(password){
+            user.password = password
+        }
+    }
+
+    // update avatar
+    if(avatar !== ''){
+        const image_id = user.avatar.public_id;
+
+        //delete previous user avatar
+        await cloudinary.v2.uploader.destroy(image_id);
+        const result = await cloudinary.v2.uploader.upload(avatar, {
+            folder: 'bookit/avatars',
+            width: '150',
+            crop: 'scale'
+        });
+
+        user.avatar = {
+            public_id: result.public_id,
+            url: result.secure_url
+        }
+    }
+
+    await user.save();
+
+    res.status(200).json({
+        success: true,
+        user
+    });
+});
+
 export {
     registerUser,
-    currentUser
+    currentUser,
+    updateUser
 }

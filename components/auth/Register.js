@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import {signIn} from 'next-auth/client'
 import {useSelector, useDispatch} from 'react-redux';
 import {useRouter} from 'next/router';
 import {toast} from 'react-toastify';
 
-import {registerUser, clearErrors} from '@/redux/actions/user-actions'
+import {registerUser, clearErrors, resetRegistration} from '@/redux/actions/user-actions'
 import ButtonLoader from '@/components/layout/ButtonLoader';
 
 export default function Register() {
@@ -26,6 +25,7 @@ export default function Register() {
     useEffect(() => {
         if(success){
             router.push('/login');
+            dispatch(resetRegistration());
         }
 
         if(error){

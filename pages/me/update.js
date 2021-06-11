@@ -1,10 +1,12 @@
+import Layout from '@/components/layout/Layout';
+import Profile from '@/components/user/Profile';
 import {getSession} from 'next-auth/client';
 
 export default function UpdateProfilePage({session}) {
     return (
-        <div>
-            UPDATE MY PROFILE
-        </div>
+        <Layout title="Update profile">
+            <Profile/>
+        </Layout>
     )
 }
 
