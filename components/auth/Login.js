@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {signIn} from 'next-auth/client'
 import {useRouter} from 'next/router';
 import {toast} from 'react-toastify';
+import Link from 'next/link';
 import ButtonLoader from '@/components/layout/ButtonLoader';
 
 export default function Login() {
@@ -31,8 +32,8 @@ export default function Login() {
     return (
         <div className="container container-fluid">
         <div className="row wrapper"> 
-		<div className="col-10 col-lg-5">
-        <form onSubmit={submitHandler} className="shadow-lg">
+		<div className="col-10 col-lg-5 shadow-lg pb-4">
+        <form onSubmit={submitHandler}>
             <h1 className="mb-3">Login</h1>
             <div className="form-group">
               <label htmlFor="email_field">Email</label>
@@ -67,7 +68,9 @@ export default function Login() {
               {loading ? <ButtonLoader/> : 'Login'}
             </button>
 
-            <a href="#" className="float-right mt-3">New User?</a>
+            <Link href="/register">
+              <a className="float-right mt-3">New User?</a>
+            </Link>
           </form>
 		  </div>
     </div>
