@@ -40,24 +40,11 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 loading: true,
             }
-        case LOAD_USER_REQUEST:
-            return {
-                ...state,
-                loading: true,
-                isAuthenticated: false
-            }
         case REGISTER_USER_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 success: true
-            }
-        case LOAD_USER_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                isAuthenticated: true,
-                user: action.payload
             }
         case REGISTER_USER_FAILED:
             return {
@@ -65,6 +52,36 @@ export const authReducer = (state = initialState, action) => {
                 loading: false,
                 error: action.payload,
                 success: false
+            }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            }
+        case RESET_REGISTRATION:
+            return {
+                ...state,
+                success: false
+            }
+        default:
+            return state;
+    }
+}
+
+export const loadUserReducer = (state = {loading: true, user: null}, action) => {
+    switch(action.type){
+        case LOAD_USER_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                isAuthenticated: false
+            }
+        case LOAD_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isAuthenticated: true,
+                user: action.payload
             }
         case LOAD_USER_FAILED:
             return {
@@ -78,11 +95,6 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: null,
-            }
-        case RESET_REGISTRATION:
-            return {
-                ...state,
-                success: false
             }
         default:
             return state;

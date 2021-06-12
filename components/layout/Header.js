@@ -7,7 +7,7 @@ import {signout, signOut} from 'next-auth/client';
 
 export default function Header() {
     const dispatch = useDispatch();
-    const {user, loading} = useSelector(state => state.auth);
+    const {user, loading} = useSelector(state => state.loadUser);
     const {route} = useRouter();
 
     useEffect(() => {
