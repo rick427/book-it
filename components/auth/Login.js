@@ -57,7 +57,11 @@ export default function Login() {
               />
             </div>
 
-            <a href="#" className="float-right mb-4">Forgot Password?</a>
+            <Link href="/password/forgot">
+              <a className="float-right mb-4">
+                Forgot Password?
+              </a>
+            </Link>
   
             <button
               id="login_button"
